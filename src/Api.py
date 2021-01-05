@@ -21,7 +21,7 @@ class User:
     #Renames a user if possible. Returns bool.
     def rename(self, name):
         result = False
-        validName = len(DbConnection.session.query(Entities.User).filter_by(Entities.User.name == name).all()) == 0;
+        validName = len(DbConnection.session.query(Entities.User).filter_by(Entities.User.name == name).all()) == 0
         if validName == True:
             self.internalData.name = name
             DbConnection.session.commit()
@@ -39,12 +39,12 @@ class User:
     #Create a new user and save it to database.  
     @staticmethod
     def Create(name, passwordHash):
-        newUser = Entities.User();
+        newUser = Entities.User()
         newUser.name = name
         newUser.password = passwordHash
 
-        DbConnection.session.add(newUser);
-        DbConnection.session.commit();
+        DbConnection.session.add(newUser)
+        DbConnection.session.commit()
 
         #TODO kéne tudni hogy sikeres volt-e! Commit dob vissza ilyet?
         return True
@@ -52,7 +52,11 @@ class User:
     #Get all users currently stored in the database. Returns List<User>
     @staticmethod
     def All():
-        entities = DbConnection.session.query(Entities.User).any();
+        result = []
+        entities = DbConnection.session.query(Entities.User).all()
+        for entity in entities:
+            result.append(User(entity.id))
+        return result
     
     #Return a User with the given name, or Nnone if no such user exists
     @staticmethod
@@ -63,7 +67,7 @@ class User:
         if entity != None:
             result = User(entity.id)
         
-        return result;
+        return result
 
 class Group:
     #DB Entity for this wrapper
@@ -85,7 +89,7 @@ class Group:
     #Renames a group if possible. Returns bool.
     def rename(self, name):
         result = False
-        validName = len(DbConnection.session.query(Entities.Group).all(Entities.Group.name == name)) == 0;
+        validName = len(DbConnection.session.query(Entities.Group).all(Entities.Group.name == name)) == 0
         if validName == True:
             self.internalData.name = name
             DbDonnection.session.commit()
@@ -95,21 +99,21 @@ class Group:
     #Assign user to this group.
     def assign(self, user):
         user.internalData.Group = self.internalData.id
-        DbConnection.session.commit();
+        DbConnection.session.commit()
     
     #Remove user from this group.    
     def remove(self, user):
         user.internalData.Group = None
-        DbConnection.session.commit();
+        DbConnection.session.commit()
            
     #Create a new user and save it to database.  
     @staticmethod
     def Create(name):
-        newGroup = Entities.Group();
+        newGroup = Entities.Group()
         newGroup.name = name
 
-        DbConnection.session.add(newGroup);
-        DbConnection.session.commit();
+        DbConnection.session.add(newGroup)
+        DbConnection.session.commit()
 
         #TODO kéne tudni hogy sikeres volt-e! Commit dob vissza ilyet?
         return True
@@ -117,7 +121,11 @@ class Group:
     #Get all users currently stored in the database. Returns List<User>
     @staticmethod
     def All():
-        return #TODO
+        result = []
+        entities = DbConnection.session.query(Entities.Group).all()
+        for entity in entities:
+            result.append(Group(entity.id))
+        return result
     
    #Return a Group with the given name, or Nnone if no such user exists
     @staticmethod
@@ -128,7 +136,7 @@ class Group:
         if entity != None:
             result = Group(entity.id)
         
-        return result;
+        return result
 
 class Question:
     #DB Entity for this wrapper
@@ -153,7 +161,6 @@ class Question:
 
     #Make a guess with the user provided.
     def guess(self, user, answer):
-        
         return #TODO
 
     #Provide the hint text to the user provided
@@ -163,12 +170,27 @@ class Question:
     #Create a new question and save it to database.  
     @staticmethod
     def Create(id, question, answer, hint, image):
-        return #TODO
+        newQuestion = Entities.Question()
+        newQuestion.id = id
+        newQuestion.question = question
+        newQuestion.answer = answer
+        newQuestion.hint = hint
+        newQuestion.image = image
+
+        DbConnection.session.add(newQuestion)
+        DbConnection.session.commit()
+
+        #TODO kéne tudni hogy sikeres volt-e! Commit dob vissza ilyet?
+        return True
     
     #Get all questions currently stored in the database. Returns List<Question>
     @staticmethod
     def All():
-        return #TODO
+        result = []
+        entities = DbConnection.session.query(Entities.Question).all()
+        for entity in entities:
+            result.append(Question(entity.id))
+        return result
 
 class Statistics:
     #Return how many times a group has used a questions hint. Return JSON formatted string.
