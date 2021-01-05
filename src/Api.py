@@ -21,7 +21,7 @@ class User:
     #Renames a user if possible. Returns bool.
     def rename(self, name):
         result = False
-        validName = len(DbConnection.session.query(Entities.User).filter_by(Entities.User.name == name).all()) == 0
+        validName = len(DbConnection.session.query(Entities.User).filter(Entities.User.name == name).all()) == 0
         if validName == True:
             self.internalData.name = name
             DbConnection.session.commit()
@@ -75,7 +75,7 @@ class Group:
 
     #Returns Id of group.
     def __init__(self, id):
-        self.internalData = DbConnection.session.query(Entities.Group).filter_by(Entities.Group.id).first()
+        self.internalData = DbConnection.session.query(Entities.Group).filter(Entities.Group.id).first()
         if self.internalData == None:
             raise ValueError
     
@@ -98,7 +98,7 @@ class Group:
     
     #Assign user to this group.
     def assign(self, user):
-        user.internalData.Group = self.internalData.id
+        user.internalData.group_id = self.internalData.id
         DbConnection.session.commit()
     
     #Remove user from this group.    
@@ -132,7 +132,7 @@ class Group:
     def ByName(name):
         result = None
 
-        entity = DbConnection.session.query(Entities.Group).filter_by(Entities.Group.name == name).first()
+        entity = DbConnection.session.query(Entities.Group).filter(Entities.Group.name == name).first()
         if entity != None:
             result = Group(entity.id)
         
@@ -144,7 +144,7 @@ class Question:
 
     #Returns Id of question.
     def __init__(self, id):
-        self.internalData = DbConnection.session.query(Entities.Question).filter_by(Entities.Question.id == id).first()
+        self.internalData = DbConnection.session.query(Entities.Question).filter(Entities.Question.id == id).first()
         if self.internalData == None:
             raise ValueError
     
