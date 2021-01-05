@@ -33,6 +33,7 @@ class Round(Base):
     id = Column('id', Integer, primary_key=True)
     group_id = Column('groupid', Integer, ForeignKey(Group.id))
     user_id = Column('userid', Integer, ForeignKey(User.id))
+    question_id = Column('question_id', Integer, ForeignKey(Question.id))
     start_time = Column('start_time', DateTime)
     end_time = Column('end_time', DateTime)
     hint_used = Column('hint_used', Boolean)

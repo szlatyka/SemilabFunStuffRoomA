@@ -1,5 +1,6 @@
 import DbConnection
 import Entities
+import json
 
 class User:
     #DB Entity for this wrapper
@@ -92,7 +93,7 @@ class Group:
         validName = len(DbConnection.session.query(Entities.Group).all(Entities.Group.name == name)) == 0
         if validName == True:
             self.internalData.name = name
-            DbDonnection.session.commit()
+            DbConnection.session.commit()
             result = True
         return result
     
@@ -132,7 +133,7 @@ class Group:
     def ByName(name):
         result = None
 
-        entity = DbConnection.session.query(Entities.Group).filter_by(Entities.Group.name == name).first()
+        entity = DbConnection.session.query(Entities.Group).filter(Entities.Group.name == name).first()
         if entity != None:
             result = Group(entity.id)
         
@@ -196,9 +197,29 @@ class Statistics:
     #Return how many times a group has used a questions hint. Return JSON formatted string.
     @staticmethod
     def ByHints():
-        return #TODO
+        rounds = DbConnection.session.query(Entities.Round).all()
+        groups = DbConnection.session.query(Entities.Group).all()
+
+        def list_hint_stat(rounds, group_id):
+            g_rounds = [round for round in rounds if round.group_id == group_id]
+            question_ids = {round.question_id for round in g_rounds}
+            return [
+                {
+                    'question_id': q_id,
+                    'hints_used': len([round
+                                       for round
+                                       in g_rounds
+                                       if round.question_id == q_id and round.hint_used])}
+                for q_id in question_ids]
+
+        stat = {group.id: {'name': group.name, 'hints': list_hint_stat(rounds, group.id)} for group in groups}
+
+        return json.dumps(stat)
+
 
     #Returns how much time each group ha needed to answer a question. Return JSON formatted string.
     @staticmethod
     def ByHours():
-        return #TODO
+        groups = DbConnection.session.query(Entities.Group).all()
+        stat = {group.id: {'name': group.name, 'hints': []} for group in groups}
+        return json.dumps(stat)
