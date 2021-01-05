@@ -4,40 +4,37 @@ import Entities
 class User:
     #DB Entity for this wrapper
     internalData = Entities.User()
-
-    def __init__(self):
-        return
         
     #Returns Id of user.
     def __init__(self, id):
-        internalData = DbConnection.session.query(Entities.User).filter_by(Entites.User.id == id).first()
+        internalData = DbConnection.session.query(Entities.User).filter_by(Entities.User.id == id).first()
         if internalData == None:
             raise ValueError
     
-    def id():
-        return internalData.Id
+    def id(self):
+        return self.internalData.id
     
     #Return name of user.
-    def name():
-        return internalData.Name
+    def name(self):
+        return self.internalData.name
     
     #Renames a user if possible. Returns bool.
-    def rename(name):
+    def rename(self, name):
         result = False
         validName = len(DbConnection.session.query(Entities.User).filter_by(Entities.User.name == name).all()) == 0;
         if validName == True:
-            internalData.name = name
+            self.internalData.name = name
             DbConnection.session.commit()
             result = True
         return result
     
     #Validates password for this user.
-    def validate(passwordHash):
-        return passwordHash == internalData
+    def validate(self, passwordHash):
+        return passwordHash == self.internalData
     
     #Gets this users group. Returns Group.    
-    def group():
-        return Group(internalData.GroupId)
+    def group(self):
+        return Group(self.internalData.group_id)
      
     #Create a new user and save it to database.  
     @staticmethod
@@ -74,34 +71,34 @@ class Group:
 
     #Returns Id of group.
     def __init__(self, id):
-        internalData = DbConnection.session.query(Entities.Group).filter_by(Entites.Group.id).first()
+        internalData = DbConnection.session.query(Entities.Group).filter_by(Entities.Group.id).first()
         if internalData == None:
             raise ValueError
     
-    def id():
-        return internalData.Id
+    def id(self):
+        return self.internalData.id
     
     #Return name of group.
-    def name():
-        return internalData.Name
+    def name(self):
+        return self.internalData.name
     
     #Renames a group if possible. Returns bool.
-    def rename(name):
+    def rename(self, name):
         result = False
         validName = len(DbConnection.session.query(Entities.Group).all(Entities.Group.name == name)) == 0;
         if validName == True:
-            internalData.name = name
-            session.commit()
+            self.internalData.name = name
+            DbDonnection.session.commit()
             result = True
         return result
     
     #Assign user to this group.
-    def assign(user):
-        user.internalData.Group = internalData.Id
+    def assign(self, user):
+        user.internalData.Group = self.internalData.id
         DbConnection.session.commit();
     
     #Remove user from this group.    
-    def remove(user):
+    def remove(self, user):
         user.internalData.Group = None
         DbConnection.session.commit();
            
@@ -139,27 +136,28 @@ class Question:
 
     #Returns Id of question.
     def __init__(self, id):
-        internalData = DbConnection.session.query(Entities.Question).filter_by(Entites.Question.id==id).first()
+        internalData = DbConnection.session.query(Entities.Question).filter_by(Entities.Question.id == id).first()
         if internalData == None:
             raise ValueError
     
-    def id():
-        return internalData.Id
+    def id(self):
+        return self.internalData.id
     
     #Return question text of this question.
-    def question():
-        return internalData.question
+    def question(self):
+        return self.internalData.question
 
     #Return answer text of this question.
-    def answer():
-        return internalData.answer
+    def answer(self):
+        return self.internalData.answer
 
     #Make a guess with the user provided.
-    def guess(user, answer):
+    def guess(self, user, answer):
+        
         return #TODO
 
     #Provide the hint text to the user provided
-    def hint(user):
+    def hint(self, user):
         return #TODO
 
     #Create a new question and save it to database.  
