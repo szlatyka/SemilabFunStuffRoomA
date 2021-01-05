@@ -22,7 +22,7 @@ class User:
     #Renames a user if possible. Returns bool.
     def rename(self, name):
         result = False
-        validName = len(DbConnection.session.query(Entities.User).filter_by(Entities.User.name == name).all()) == 0
+        validName = len(DbConnection.session.query(Entities.User).filter(Entities.User.name == name).all()) == 0
         if validName == True:
             self.internalData.name = name
             DbConnection.session.commit()
@@ -145,7 +145,7 @@ class Question:
 
     #Returns Id of question.
     def __init__(self, id):
-        self.internalData = DbConnection.session.query(Entities.Question).filter_by(Entities.Question.id == id).first()
+        self.internalData = DbConnection.session.query(Entities.Question).filter(Entities.Question.id == id).first()
         if self.internalData == None:
             raise ValueError
     
