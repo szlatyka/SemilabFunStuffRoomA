@@ -1,3 +1,4 @@
+
 class User
     #DB Entity for this wrapper
     internalData
