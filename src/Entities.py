@@ -8,7 +8,7 @@ class Group(Base):
     __tablename__ = "Groups"
 
     id = Column('id', Integer, primary_key=True)
-    name = Column('name', String)
+    name = Column('name', String, unique=True)
 
 class User(Base):
     __tablename__ = "Users"
