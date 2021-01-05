@@ -7,8 +7,8 @@ class User:
         
     #Returns Id of user.
     def __init__(self, id):
-        internalData = DbConnection.session.query(Entities.User).filter_by(Entities.User.id == id).first()
-        if internalData == None:
+        self.internalData = DbConnection.session.query(Entities.User).filter(Entities.User.id == id).first()
+        if self.internalData == None:
             raise ValueError
     
     def id(self):
@@ -63,7 +63,7 @@ class User:
     def ByName(name):
         result = None
 
-        entity = DbConnection.session.query(Entities.User).filter_by(Entities.User.name == name).first()
+        entity = DbConnection.session.query(Entities.User).filter(Entities.User.name == name).first()
         if entity != None:
             result = User(entity.id)
         
@@ -75,8 +75,8 @@ class Group:
 
     #Returns Id of group.
     def __init__(self, id):
-        internalData = DbConnection.session.query(Entities.Group).filter_by(Entities.Group.id).first()
-        if internalData == None:
+        self.internalData = DbConnection.session.query(Entities.Group).filter_by(Entities.Group.id).first()
+        if self.internalData == None:
             raise ValueError
     
     def id(self):
@@ -144,8 +144,8 @@ class Question:
 
     #Returns Id of question.
     def __init__(self, id):
-        internalData = DbConnection.session.query(Entities.Question).filter_by(Entities.Question.id == id).first()
-        if internalData == None:
+        self.internalData = DbConnection.session.query(Entities.Question).filter_by(Entities.Question.id == id).first()
+        if self.internalData == None:
             raise ValueError
     
     def id(self):
