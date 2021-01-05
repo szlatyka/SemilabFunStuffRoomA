@@ -10,4 +10,3 @@
 # VS Code:
 .vscode/
 *.pyc
-sqlapi.db

@@ -14,3 +14,14 @@ print();
 grp.remove(usr)
 print("#ID: " + str(usr.group()));
 print("#ID: " + str(usr.group()));
+
+
+
+print(Api.Group.All())
+
+Api.Group.Create('Sorter')
+print(Api.Group.All())
+
+Api.Group.Create('Analysis')
+print(Api.Group.All())
+
