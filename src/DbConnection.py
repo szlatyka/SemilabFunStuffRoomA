@@ -1,7 +1,8 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, VARCHAR, BLOB, DateTime, Boolean
 from sqlalchemy.orm import sessionmaker
-Base = declarative_base()
+
+from Entities import Base
 
 engine = create_engine('sqlite:///sqlapi.db', echo=True)
 Base.metadata.create_all(bind=engine)
