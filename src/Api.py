@@ -75,7 +75,7 @@ class Group:
 
     #Returns Id of group.
     def __init__(self, id):
-        self.internalData = DbConnection.session.query(Entities.Group).filter(Entities.Group.id).first()
+        self.internalData = DbConnection.session.query(Entities.Group).filter(Entities.Group.id == id).first()
         if self.internalData == None:
             raise ValueError
     
