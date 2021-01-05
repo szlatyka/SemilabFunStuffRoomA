@@ -13,3 +13,4 @@ grp.assign(usr)
 print();
 grp.remove(usr)
 print("#ID: " + str(usr.group()));
+print("#ID: " + str(usr.group()));
