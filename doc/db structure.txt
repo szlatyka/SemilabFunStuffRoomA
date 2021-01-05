@@ -1,0 +1,32 @@
+groups
+------
+Id : Integer, PRIMARY, AUTOINCREMENT
+Name: string
+
+users
+-----
+Id : Integer, PRIMARY, AUTOINCREMENT
+Name : string
+Password : varchar
+GroupId: Integer, FOREIGN
+
+questions
+---------
+Id : Integer, PRIMARY, AUTOINCREMENT
+Question : string
+Image : byte[]
+Answer : string
+Hint : string
+
+answers
+-------
+Id : Integer, PRIMARY, AUTOINCREMENT
+UserId : FOREIGN
+HintUsed : bool
+Time : datetime/integer
+
+class Group //Entity -> groups
+class User //Entity -> users
+class Question // Entity -> questions
+class Asnwer //Entity -> answers
+class Statistics // innen Asnwers-et lehet lekérni
