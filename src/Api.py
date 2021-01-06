@@ -50,6 +50,13 @@ class User:
         #TODO kéne tudni hogy sikeres volt-e! Commit dob vissza ilyet?
         return True
     
+    @staticmethod
+    def Delete(id):
+        entity = DbConnection.session.query(Entities.Question).get(id);
+        if(entity != None and entity.id != None)
+            DbConnection.session.delete(entity)
+            DbConnection.session.commit()
+            
     #Get all users currently stored in the database. Returns List<User>
     @staticmethod
     def All():
